@@ -11,3 +11,5 @@ Feature:
 7. Paging Plan chart, split screen to 2 panels, each panel will have 32 items
 8. Update chart by real-time, auto go to next page after 3 seconds
 9. If value Counting of a Machine greater than or equal 80% of Target. It will be Red
+10. When Machine alert BREAK, display popup status on all browsers, tabs if opening (Display: Machine name, Worker name)
+11. When ControlAdmin (an application on outsite) send message, display popup message on all browsers, tabs if opening
