@@ -13,3 +13,16 @@ Feature:
 9. If value Counting of a Machine greater than or equal 80% of Target. It will be Red
 10. When Machine alert BREAK, display popup status on all browsers, tabs if opening (Display: Machine name, Worker name)
 11. When ControlAdmin (an application on outsite) send message, display popup message on all browsers, tabs if opening
+
+--
+This project use ASP.NET MVC 5, Matrix admin theme
+Database are SQLITE and MS SQL
+
+#3 #4
+Use NPOI library
+
+#6 #7
+Use Google Chart API
+
+#10 #11
+Use SignalR
