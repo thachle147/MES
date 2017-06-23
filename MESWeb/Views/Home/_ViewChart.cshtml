@@ -1,0 +1,62 @@
+﻿@{
+    string chartID = DateTime.UtcNow.Ticks.ToString();
+    string chartData = ViewData["ChartData"] + "";
+}
+
+<div id="@(chartID)" style="padding:15px;background-color:white;"></div>
+
+@if (string.IsNullOrEmpty(chartData))
+{
+    <script type="text/javascript">
+        $('#@(chartID)').html('No data to display');
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        var chart111;
+        google.charts.load('current', {
+            callback: function () {
+                chart111 = new google.visualization.ColumnChart(document.getElementById('@(chartID)'));
+                var chartOption = {
+                    chart: {
+                        title: 'Company Performance',
+                        subtitle: 'Target, Counting on @(ViewData["Date"].ToString())',
+                    },
+                    height: 650,
+                    width: 900,
+                    allowHtml: true,
+                    //legend: { position: 'none' }
+                };
+                var _data = "@Html.Raw(chartData)";
+                drawChart(_data);
+
+                planChartObj.timeoutReloadChart = setTimeout(function () {
+                    planChartObj.intervalReloadChart = setInterval(reloadChart, 3000);
+                }, 3000);
+
+                function drawChart(subData) {
+                    console.log(subData);
+                    var chartData = eval("[['Machines', 'Target', { role: 'style' }, 'Counting', { role: 'style' }]," + subData + "]");
+                    var data = google.visualization.arrayToDataTable(chartData);
+                    chart111.draw(data, chartOption);
+                };
+
+                function reloadChart() {
+                    var _ids = planChartObj.planChartSelected.toString();
+                    $.ajax({
+                        url: '/Home/ReloadChart',
+                        type: 'get',
+                        data: { ids: _ids },
+                        success: function (result) {
+                            clearTimeout(planChartObj.timeoutReloadChart);
+                            drawChart(result);
+                        }
+                    });
+                };
+            },
+            'packages': ['corechart']
+        });
+
+    </script>
+}

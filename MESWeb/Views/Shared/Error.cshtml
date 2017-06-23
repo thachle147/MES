@@ -1,0 +1,12 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    ViewBag.Breadcrumb = "Error - An error occurred while processing your request";
+    string msgError = Model.Exception != null ? Model.Exception.ToString() : "";
+}
+
+<h3>@Model.ActionName</h3>
+<h3>@Model.ControllerName</h3>
+<hr />
+<p>@msgError</p>

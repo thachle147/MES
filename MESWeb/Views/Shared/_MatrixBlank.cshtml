@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - MES Web Sample</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/bootstrap.min.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/bootstrap-responsive.min.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/uniform.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/datepicker.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/select2.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/jquery.gritter.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/matrix-style.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/css/matrix-media.css?v=1.1")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/font-awesome/css/font-awesome.css?v=1.1")" />
+    @*<link rel='stylesheet' href="http://fonts.googleapis.com/css?family=Open+Sans:400,700,800" type='text/css'>*@
+    <link rel="stylesheet" href="@Url.Content("~/Content/matrix/font-awesome/css/family-Open-Sans-400-700-800.css?v=1.1")" />
+    <style>
+        .datepicker {
+            z-index: 99999 !important;
+        }
+
+        .ab-gritter-info div.gritter-item {
+            background-color: #51A351;
+        }
+
+        .table tbody tr:hover td {
+            color: #27A9E3;
+        }
+
+        .ab-active-submenu {
+            color: #587DA8 !important;
+        }
+    </style>
+    @RenderSection("CSS", required: false)
+</head>
+<body style="background-color: #fff;">
+    <div id="header">
+        <h1><a href="/">MES Web Sample</a></h1>
+    </div>
+    <div id="user-nav" class="navbar navbar-inverse">
+    </div>
+    <div id="search">
+    </div>
+    @RenderBody()
+    @*<div id="content" style="margin-left:0px;">
+        <div class="container-fluid">
+            
+        </div>
+    </div>*@
+
+    <script src="@Url.Content("~/Content/matrix/js/jquery.min.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/jquery.ui.custom.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/bootstrap.min.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/jquery.uniform.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/jquery.gritter.min.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/jquery.dataTables.min.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/bootstrap-datepicker.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/select2.min.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/waitingDialog.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/matrix/js/matrix.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/admin.js?v=1.1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/google/loader.js?v=1.1")" type="text/javascript"></script>
+    @*<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>*@
+
+    @RenderSection("Javascript", required: false)
+</body>
+</html>

@@ -1,0 +1,77 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MatrixBlank.cshtml";
+    ViewBag.Title = "Plan Chart";
+    string chartID = DateTime.UtcNow.Ticks.ToString();
+    string chartData = ViewData["ChartData"] + "";
+}
+
+@section Javascript {
+    <script src="@Url.Content("~/Scripts/planChart.js?v=1.1")" type="text/javascript"></script>
+
+    @if (string.IsNullOrEmpty(chartData))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#@(chartID)').html('No data to display');
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            google.charts.load('current', {
+                callback: function () {
+                    planColumnChartObj = new google.visualization.ColumnChart(document.getElementById('@(chartID)'));
+
+                    var chartOption = {
+                        
+                        title: 'Company Performance',
+                        subtitle: 'Target, Counting on @(ViewData["Date"].ToString())',
+                        height: 750,
+                        //width: 900,
+                        allowHtml: true,
+                        legend: { position: 'none' },
+                        bar: {
+                            groupWidth: 60
+                        }
+                    };
+
+                    drawChart("@Html.Raw(chartData)"); //First draw chart
+
+                    planChartObj.timeoutReloadChart = setTimeout(function () {
+                        planChartObj.intervalReloadChart = setInterval(reloadChart, 3000);
+                    }, 3000);
+
+                    function drawChart(subData) {
+                        planChartObj.chartData = eval("[" + subData + "]");
+                        var chartData = eval("[['Machines', 'Target', { role: 'style' }, 'Counting', { role: 'style' }]," + subData + "]");
+                        var data = google.visualization.arrayToDataTable(chartData);
+                        planColumnChartObj.draw(data, chartOption);
+                    }
+
+                    function reloadChart() {
+                        $.ajax({
+                            url: '/Statistics/ReloadChart',
+                            type: 'get',
+                            data: { ids: location.search.replace('?ids=', '') },
+                            success: function (result) {
+                                clearTimeout(planChartObj.timeoutReloadChart);
+                                drawChart(result);
+                            }
+                        });
+                    }
+                },
+                'packages': ['corechart']
+            });
+
+        </script>
+    }
+
+}
+
+
+<div class="row-fluid">
+    <div id="@(chartID)" style="padding:15px;background-color:white;"></div>
+</div>
+

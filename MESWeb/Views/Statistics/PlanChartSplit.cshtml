@@ -1,0 +1,120 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_MatrixBlank.cshtml";
+    ViewBag.Title = "Plan Chart";
+
+    List<string> chartData1 = (List<string>)ViewData["ChartData1"];
+    List<string> chartData2 = (List<string>)ViewData["ChartData2"];
+
+}
+
+@section Javascript {
+    <script src="@Url.Content("~/Scripts/planChart.js?v=1.1")" type="text/javascript"></script>
+
+    @if (string.IsNullOrEmpty("asd"))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            var __intervalReloadChart;
+            var chart1, chart2;
+            google.charts.load('current', {
+                callback: function () {
+                    chart1 = new google.visualization.ColumnChart(document.getElementById('divChart1'));
+                    chart2 = new google.visualization.ColumnChart(document.getElementById('divChart2'));
+
+                    var chartOption = {
+                        title: 'Company Performance',
+                        width: '100%',
+                        height: 350,
+                        allowHtml: true,
+                        hAxis: { title: 'Machines', titleTextStyle: { color: 'red' } },
+                        vAxis: { minValue: 0 },
+                        legend: { position: 'none' },
+                        chartArea: { 'width': '95%' },
+                        bar: {
+                            groupWidth: 60
+                        }
+                    };
+
+                    var __chartData1 = @Html.Raw(chartData1.Count > 0 ? "[['Machines', 'Target', { role: 'style' }, 'Counting', { role: 'style' }]," + string.Join(",", chartData1) + "]" : "null");
+					var __chartData2 = @Html.Raw(chartData2.Count > 0 ? "[['Machines', 'Target', { role: 'style' }, 'Counting', { role: 'style' }]," + string.Join(",", chartData2) + "]" : "null");
+                    
+                    drawChart(__chartData1, __chartData2); // Draw chart first time
+
+
+                    planChartObj.timeoutReloadChart = setTimeout(function () {
+						clearTimeout(planChartObj.timeoutReloadChart);
+						__intervalReloadChart = setInterval(reloadChart, 3000);
+                    }, 3000);
+
+                    function drawChart(subData1, subData2) {
+                        if (subData1 != null) {
+                            var _data1 = google.visualization.arrayToDataTable(subData1);
+                            chart1.draw(_data1, chartOption);
+                        }
+
+                        if (subData2 !=null) {
+                            var _data2 = google.visualization.arrayToDataTable(subData2);
+                            chart2.draw(_data2, chartOption);
+                        }
+                    }
+
+                    function reloadChart() {
+                        var _link = $('.planchart-next-reload').attr('href').replace('ShowPlanChart', 'ReloadPlanChart');
+						if (_link == "#") {
+						    //clearInterval(intervalReloadChart);
+						    _link = '/Statistics/ReloadPlanChart' + location.search.split('&pageNum=')[0] + '&pageNum=1';
+						}
+						if (_link != "#") {
+						    $.ajax({
+						        url: _link,
+						        type: 'get',
+						        data: { },
+						        success: function (result) {
+						            var reloadData1 = null;
+						            var reloadData2 = null;
+						            if(result.Extend1 != null && result.Extend1.toString().length)
+						                reloadData1 = eval("[['Machines', 'Target', { role: 'style' }, 'Counting', { role: 'style' }]," + result.Extend1.toString() + "]");
+						            if(result.Extend2 != null && result.Extend2.toString().length)
+						                reloadData2 = eval("[['Machines', 'Target', { role: 'style' }, 'Counting', { role: 'style' }]," + result.Extend2.toString() + "]");
+									
+						            drawChart(reloadData1, reloadData2);
+									
+						            $('#hidCurrentPage').val(result.Extend.CurrentPage);
+						            $('#hidTotal').val(result.Extend.Total);
+						            planChartObj.renderChartPager(result.Extend.CurrentPage, result.Extend.Total, 64);
+						        }
+						    });
+						}
+                    }
+					
+                },
+                'packages': ['corechart']
+            });
+
+        </script>
+    }
+
+}
+
+<input type="hidden" id="hidCurrentPage" value="@ViewData["CurrentPage"]" />
+<input type="hidden" id="hidTotal" value="@ViewData["Total"]" />
+<input type="hidden" id="hidChartId" value="@ViewData["ChartId"]" />
+
+
+<div id="divChart1" style="background-color:white;"></div>
+
+<hr />
+
+<div id="divChart2" style="background-color:white;"></div>
+<div class="pagination" id="divChartPager" style="text-align: center;">
+</div>
+
+

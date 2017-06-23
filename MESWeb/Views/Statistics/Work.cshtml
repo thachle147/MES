@@ -1,0 +1,56 @@
+﻿@model List<T_PlanData>
+
+<div class="span12">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-th"></i></span>
+            <h5>Search result: @Model.Count record(s)</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="chbAll" />
+                        </th>
+                        <th>Cus_date</th>
+                        <th>Cus_machineid</th>
+                        <th>Cus_worker</th>
+                        <th>Cus_stylename</th>
+                        <th>Cus_lineno</th>
+                        <th>Cus_processname</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr class="odd gradeX">
+                            <td style="text-align:center;">
+                                <input type="checkbox" value="@Model[i].ID" id="chb@(Model[i].ID)" class="chbViewPlanChart" />
+                            </td>
+                            <td>
+                                <span>@Model[i].Cus_date.ToShortDateString()</span>
+                            </td>
+                            <td>
+                                <span>@Model[i].Cus_machineid</span>
+                            </td>
+                            <td>
+                                <span>@Model[i].Cus_worker</span>
+                            </td>
+                            <td>
+                                <span>@Model[i].Cus_stylename</span>
+                            </td>
+                            <td>
+                                <span>@Model[i].Cus_lineno</span>
+                            </td>
+                            <td>
+                                <span>@Model[i].Cus_processname</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

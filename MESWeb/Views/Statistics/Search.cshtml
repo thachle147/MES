@@ -1,0 +1,59 @@
+﻿
+<table style="margin: 15px auto;">
+    <tr>
+        <td>
+            <label>Date:</label>
+            <input type="text" id="txtDate" class="datepicker" value="@DateTime.Now.ToString("yyyy-MM-dd")" data-date-format="yyyy-mm-dd" />
+        </td>
+        <td style="padding-left:20px;">
+            <label>Worker:</label>
+            <input type="text" id="txtWorker" placeholder="Worker" />
+        </td>
+        <td style="padding-left:20px;">
+            <label>Style:</label>
+            <input type="text" id="txtStyle" placeholder="Style" />
+        </td>
+        <td style="padding-left:20px;">
+            <label>Line No.:</label>
+            <input type="text" id="txtLineNo" placeholder="Line number" />
+        </td>
+        <td style="padding-left:20px;">
+            <label>Process Name:</label>
+            <input type="text" id="txtProcessName" placeholder="Process name" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align:center;">
+            <input type="button" id="btnSearch" class="btn btn-info" onclick="startSearch()" value="Search" />
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    //$(document).ready(function () {
+    function startSearch() {
+        //$('#btnSearch').on('click', function () {
+        var _date = $('#txtDate').val();
+        var _worker = $('#txtWorker').val();
+        var _style = $('#txtStyle').val();
+        var _lineNumber = $('#txtLineNo').val();
+        var _processName = $('#txtProcessName').val();
+        //location.href = '/home/search?date=' + _date + '&worker=' + _worker + '&style=' + _style + '&lineNo=' + _lineNumber + '&processName=' + _processName;
+        ajaxGet('/Statistics/Search', { date: _date, worker: _worker, style: _style, lineNo: _lineNumber, processName: _processName }, function (result) {
+            $('#divResultSearch').html(result);
+
+            $('.data-table').dataTable({
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                "sDom": '<""l>t<"F"fp>'
+            });
+
+            //$('#divResultSearch input').uniform();
+            $('#divResultSearch select').select2();
+            if (window['planChartObj'] !== undefined)
+                planChartObj.registerEventCheckbox();
+        });
+        //});
+    }
+    //});
+</script>

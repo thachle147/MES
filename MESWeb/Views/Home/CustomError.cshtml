@@ -1,0 +1,10 @@
+﻿@model Exception
+@{
+    ViewBag.Title = "Error!!!";
+    ViewBag.Breadcrumb = "Error - An error occurred while processing your request";
+}
+
+<div class="row-fluid">
+    <p>@Model.ToString()</p>
+</div>
+

@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    ViewBag.Breadcrumb = "Settings";
+
+    List<string> exportColumn = (List<string>)ViewData["ExportColumn"];
+    List<string> sourcePlanColumns = (List<string>)ViewData["SourcePlanColumns"];
+    Setting timeReloadChart = (Setting)ViewData["TimeReloadChart"];
+    Setting planChartColor = (Setting)ViewData["PlanChartColor"];
+    Setting planChartThreshold = (Setting)ViewData["PlanChartThreshold"];
+
+    sourcePlanColumns.RemoveAll(a => exportColumn.Contains(a));
+    sourcePlanColumns.InsertRange(0, exportColumn);
+}
+
+@section Javascript {
+    <script src="@Url.Content("~/Scripts/settings.js?v=1.1")" type="text/javascript"></script>
+}
+
+<div class="row-fluid">
+    <div class="span4">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon" style="width:21px;"> <i class="icon-list-ol"></i> </span>
+                <h5>Excel Plan Data - Export columns option</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form action="#" method="get" class="form-horizontal">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width:21px;-webkit-border-bottom-left-radius: 0px;border-bottom-left-radius: 0px;-moz-border-radius-bottomleft: 0px;-webkit-border-top-left-radius: 0px;border-top-left-radius: 0px;">
+                                <input type="checkbox" id="chbAll_ExportColumn" style="margin-top:0;" />
+                            </th>
+                            <th>Column Name</th>
+                        </tr>
+                        </table>
+                    <div class="fix_hgt" style="height:600px">
+                        <table class="table table-bordered ab-table-sortable" id="tableExportColumns">
+                            <tbody>
+                                <tr style="display:none;"><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr class="ab-selected-row">
+                                    <td style="text-align:center;width:25px;">
+                                        <input type="checkbox" checked disabled />
+                                    </td>
+                                    <td style="color:silver;">
+                                        Dv_MAC
+                                    </td>
+                                </tr>
+                                <tr class="ab-selected-row">
+                                    <td style="text-align:center;width:25px;">
+                                        <input type="checkbox" checked disabled />
+                                    </td>
+                                    <td style="color:silver;">
+                                        Cus_company
+                                    </td>
+                                </tr>
+                                @foreach (var _column in sourcePlanColumns)
+                                {
+                                    bool _isSelected = exportColumn.Contains(_column);
+                                    <tr class="ab-row-moveable @_column @(_isSelected ? "ab-selected-row" : "")">
+                                        <td style="text-align:center;width:25px;">
+                                            <input type="checkbox" class="chbExportColumnItem" @(_isSelected ? "checked" : "") id="chb_@_column" value="@_column" />
+                                        </td>
+                                        <td>
+                                            <label for="chb_@_column" style="display:initial;">@_column</label>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="btnSaveExportColumn" class="btn btn-success" style="float:right;">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>

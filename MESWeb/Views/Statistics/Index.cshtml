@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Statistics Target & Counting";
+    ViewBag.Breadcrumb = "Statistics";
+    List<T_PlanData> result = new List<T_PlanData>();
+    if (ViewData["SearchResult"] != null)
+    {
+        result = (List<T_PlanData>)ViewData["SearchResult"];
+    }
+
+}
+
+@section Javascript {
+    <script src="@Url.Content("~/Scripts/planChart.js?v=1.1")" type="text/javascript"></script>
+}
+
+
+<div class="row-fluid">
+    @Html.Partial(Url.Content("~/Views/Statistics/Search.cshtml"))
+</div>
+
+<div class="row-fluid">
+    <input type="button" id="btnViewPlanChart" class="btn btn-info" value="View chart" />
+</div>
+
+<div class="row-fluid" id="divResultSearch">
+    @Html.Partial(Url.Content("~/Views/Statistics/Work.cshtml"), result)
+</div>
+

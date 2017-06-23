@@ -1,0 +1,36 @@
+﻿@model Worker
+
+@using (Html.BeginForm("SaveWorker", "Organization", FormMethod.Post, new { id = "workerForm", @class = "form-horizontal" }))
+{
+    <div class="control-group">
+        <label class="control-label">
+            Worker No.:
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(a => a.Cus_worker, new { @class = "1span11 ab-required" })
+            <span style="color:#DA542E;font-size: 16px;">&nbsp;*</span>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">
+            Name:
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(a => a.Cus_name, new { @class = "1span11" })
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">
+            Skill:
+        </label>
+        <div class="controls">
+            @Html.TextBoxFor(a => a.Cus_skill, new { @class = "1span11" })
+        </div>
+    </div>
+
+    <div class="control-group" style="padding-top:10px;padding-bottom:10px;float:right;border-top:none;">
+        <button type="button" id="btnSaveWorkerForm" class="btn btn-success" style="margin-left:15px;"> Save </button>
+    </div>
+}

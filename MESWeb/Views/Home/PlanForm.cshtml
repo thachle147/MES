@@ -1,0 +1,184 @@
+﻿@model PlanData
+
+@{
+    ViewBag.Title = "Create Plan";
+    ViewBag.Breadcrumb = "Plan Creation";
+}
+
+@section Javascript {
+    <script src="@Url.Content("~/Scripts/plan.js?v=1.1")" type="text/javascript"></script>
+}
+
+<div class="row-fluid">
+    <div class="span6">
+
+        <div class="alert alert-success" id="divSaveSuccess" style="display:none;">
+            <h4>Success!</h4> Save Plan successful, back to list now
+        </div>
+        <div class="alert alert-error" id="divPlanFormMsg" style="display:none;">
+            <div id="divValidationMsg">
+                <h4>Warning!</h4> <span style="color:#DA542E">(*)</span> is required. Please input all required fields
+            </div>
+            <div id="divSaveErrorMsg" style="display:none;">
+                <h4>Error!</h4> Save Plan unsuccessful!
+            </div>
+        </div>
+
+
+        <div class="widget-box" style="margin-top:0px;">
+            <div class="widget-title">
+                <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <h5>Add new Plan</h5>
+            </div>
+            <div class="widget-content nopadding">
+                @using (Html.BeginForm("SavePlan", "Home", FormMethod.Post, new { id = "planForm", @class = "form-horizontal" }))
+                {
+                    <div class="control-group">
+                        <label class="control-label">
+                            Company:
+                        </label>
+                        <div class="controls">
+                            @*@Html.DropDownListFor(a => a.Cus_company, new SelectList(Utilities.GetCompanyList()), new { @class = "span11 ab-required" })*@
+                            @Html.TextBoxFor(a => a.Cus_company, new { @class = "span11 ab-required" })
+                            <span style="color:#DA542E;font-size: 16px;">&nbsp;*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">
+                            Factory:
+                        </label>
+                        <div class="controls">
+                            @Html.TextBoxFor(a => a.Cus_factory, new { @class = "span11 ab-required" })
+                            <span style="color:#DA542E;font-size: 16px;">&nbsp;*</span>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">
+                            Date:
+                        </label>
+                        <div class="controls">
+                            <input type="text" name="Cus_date" id="Cus_date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="span11" disabled>
+                        </div>
+                    </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Apply devices:
+                            </label>
+                            <div class="controls">
+                                <select class="ab-select-normal" id="selectStatusDevice" name="selectStatusDevice">
+                                    <option value="0" selected="selected">Online</option>
+                                    <option value="1">Offline</option>
+                                    <option value="2">All</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Auth Key:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_authenkey, new { @class = "span11 ab-required" })
+                                <span style="color:#DA542E;font-size: 16px;">&nbsp;*</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Type:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_type, new { @class = "span11" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Line Number:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_lineno, new { @class = "span11" })
+                            </div>
+                        </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Process Name:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_processname, new { @class = "span11" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Module:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_module, new { @class = "span11" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Daily Sequence:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_dailyseq, new { @class = "span11", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Style Name:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_stylename, new { @class = "span11" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Target Quantity:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_targetqty, new { @class = "span11", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Seat Sequence:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_seatseq, new { @class = "span11" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Trim Count:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_trimcount, new { @class = "span11", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Punching Number:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_punchingno, new { @class = "span11" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    RPM:
+                                </label>
+                                <div class="controls">
+                                    @Html.TextBoxFor(a => a.Cus_rpm, new { @class = "span11", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" })
+                                </div>
+                            </div>
+
+                            <div class="control-group" style="padding-top:10px;padding-bottom:10px;float:right;border-top:none;">
+                                <a href="/Home/Index" class="btn">Back to list</a>
+                                <button type="button" class="btn btn-primary" onclick="javascript: location.reload();" style="margin-left:15px;">Reset</button>
+                                <button type="button" class="btn btn-success btnSavePlanForm" style="margin-left:15px;"> Save </button>
+                            </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

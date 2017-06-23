@@ -1,0 +1,64 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Factory";
+    ViewBag.Breadcrumb = "Factory";
+    int _countFactory = 0;
+}
+
+@section Javascript{
+    <script src="@Url.Content("~/Scripts/organization.js?v=1.1")" type="text/javascript"></script>
+}
+
+<div class="row-fluid">
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-th"></i></span>
+            <h5>Factory List</h5>
+        </div>
+
+        <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped data-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">#</th>
+                        <th style="cursor: pointer;">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="odd gradeX">
+                            <td><a href="#" class="btnEditFactory" data-id="Factory@_countFactory">Edit</a></td>
+                            <td id="Factory@_countFactory">@item</td>
+                        </tr>
+                        _countFactory++;
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div id="modalFactoryForm" class="modal hide">
+    <div class="modal-header">
+        <button data-dismiss="modal" class="close" type="button">x</button>
+        <h3>Change name of Factory</h3>
+    </div>
+    <div class="modal-body">
+        <div class="widget-content nopadding">
+            <div class="control-group">
+                <label class="control-label">
+                    Factory:
+                </label>
+                <div class="controls">
+                    <input type="text" id="txtFactoryName" />
+                    <input type="hidden" id="hidFactoryName" />
+                    <input type="hidden" id="hidFactoryFormId" />
+                    <input type="button" id="btnSaveFactory" class="btn btn-info" value="Save change" style="margin-left: 30px;margin-top: -10px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

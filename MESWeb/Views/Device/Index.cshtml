@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Device>
+@{
+    ViewBag.Title = "Device List";
+    ViewBag.Breadcrumb = "Devices";
+    int countOnline = Model.Count(a => a.IsOnline);
+    int countOffline = Model.Count() - countOnline;
+}
+
+<div class="row-fluid">
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+            <li class="bg_lb" title="@countOnline Device Online" style="min-width: 7%;">
+                <a href="#">
+                    <i class="icon-rss">@countOnline</i><span class="label label-warning">Online</span>
+                </a>
+            </li>
+            <li class="bg_lh" title="@countOffline Devices Offline" style="min-width: 7%;">
+                <a href="#">
+                    <i class="icon-minus-sign">@countOffline</i><span class="label label-info">Offline</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon"><i class="icon-th"></i></span>
+            <h5>Device List</h5>
+        </div>
+
+        <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped data-table">
+                <thead>
+                    <tr>
+                        <th style="cursor: pointer;">Dv_MAC</th>
+                        <th style="cursor: pointer;">Cus_Atomid</th>
+                        <th style="cursor: pointer;">Cus_machineid</th>
+                        <th style="cursor: pointer;">Status</th>
+                        <th style="cursor: pointer;">Cus_company</th>
+                        <th style="cursor: pointer;">Cus_factory</th>
+                        <th style="cursor: pointer;">Cus_worker</th>
+                        <th style="cursor: pointer;">LastAskUnitID</th>
+                        <th style="cursor: pointer;">Dv_state</th>
+                        <th style="cursor: pointer;">Dv_version</th>
+                        <th style="cursor: pointer;">Dv_type</th>
+                        <th style="cursor: pointer;">ID2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@item.Dv_MAC</td>
+                            <td>@item.Cus_Atomid</td>
+                            <td>@item.Cus_machineid</td>
+                            <td style="text-align:center;">
+                                @if (item.IsOnline)
+                                {
+                                    <div class="progress progress-mini active progress-striped">
+                                        <div style="width: 100%;" class="bar"><span style="color:black;">Connected</span></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span>- - -</span>
+                                }
+                            </td>
+                            <td>@item.Cus_company</td>
+                            <td>@item.Cus_factory</td>
+                            <td>@item.Cus_worker</td>
+                            <td>
+                                @if (item.LastAskUnitID.HasValue)
+                                {
+                                    <span>@item.LastAskUnitID.Value.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                                }
+                            </td>
+                            <td>@item.Dv_state</td>
+                            <td>@item.Dv_version</td>
+                            <td>@item.Dv_type</td>
+                            <td>@item.ID2</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+﻿@model T_PlanData
+
+@{
+    ViewBag.Title = "Create Plan";
+}
+
+@section Javascript {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
+}
+
+<div id="content-header">
+    <div id="breadcrumb">
+        <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
+        <a href="#">Plan</a>
+        <a href="#" class="current">Creating</a>
+    </div>
+    <!--<h1>Tables 11</h1>-->
+</div>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"> <i class="icon-align-justify"></i> </span>
+                    <h5>Personal-info</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    @using (Html.BeginForm("SavePlan", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                        <div class="control-group">
+                            <label class="control-label">
+                                Date:
+                            </label>
+                            <div class="controls">
+                                @*<input type="text" data-date-format="yyyy-mm-dd" class="datepicker span11">*@
+                                @Html.TextBoxFor(a => a.Cus_date, new { data_date_format = "yyyy-mm-dd", @class = "datepicker" })
+                                <span class="help-block">Date with Formate of (yyyy-mm-dd)</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Auth Key:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_authenkey)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Type:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_type)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Line Number:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_lineno)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Process Name:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_processname)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Module:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_module)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Daily Sequence:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_dailyseq)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Style Name:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_stylename)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Target Quantity:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_targetqty)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Seat Sequence:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_seatseq)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Trim Count:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_trimcount)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Punching Number:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_punchingno)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                                RPM:
+                            </label>
+                            <div class="controls">
+                                @Html.TextBoxFor(a => a.Cus_rpm)
+                            </div>
+                        </div>
+
+
+                        <div class="control-group" style="padding-top:10px;padding-bottom:10px;float:right;border-top:none;">
+                            <button type="button" class="btn btn-primary">Reset</button>
+                            <button type="submit" class="btn btn-success" style="margin-left:15px;">Save & New</button>
+                            <button type="submit" class="btn btn-success" style="margin-left:15px;">Save & Close</button>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
